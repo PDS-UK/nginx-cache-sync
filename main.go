@@ -20,6 +20,7 @@ func getEnv(key, fallback string) string {
 }
 
 func main() {
+    log.SetPrefix("[nginx-cache-sync] ")
     log.SetOutput(os.Stdout)
 
 	dbUser := os.Getenv("DB_USER")
