@@ -20,6 +20,8 @@ func getEnv(key, fallback string) string {
 }
 
 func main() {
+    log.SetOutput(os.Stdout)
+
 	dbUser := os.Getenv("DB_USER")
 	dbPass := os.Getenv("DB_PASSWORD")
 	dbHost := os.Getenv("DB_HOST")
