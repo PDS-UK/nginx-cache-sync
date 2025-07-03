@@ -1,0 +1,41 @@
+name: Manual Build & Upload Binary
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. v1.0.0)'
+        required: true
+
+jobs:
+  build:
+    #        runs-on: ubuntu-latest
+    runs-on: pds-uk-runner-set
+
+    strategy:
+      matrix:
+        goos: [linux]
+        goarch: [amd64]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.21
+
+      - name: Build binary
+        run: |
+          mkdir -p dist
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} CGO_ENABLED=0 go build -a -installsuffix cgo -o dist/nginx-cache-sync main.go
+
+      - name: Create GitHub release (if not exists)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          name: Release ${{ github.event.inputs.version }}
+          files: dist/nginx-cache-sync
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
