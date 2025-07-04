@@ -99,10 +99,15 @@ func clearCache(cachePath string) {
 
 func logJSON(msg string, fields map[string]string) {
 	entry := map[string]string{
-		"msg": "[nginx-cache-sync] " + msg,
+		"msg": msg,
 	}
 	for k, v := range fields {
 		entry[k] = v
 	}
-	_ = json.NewEncoder(os.Stdout).Encode(entry)
+	jsonBytes, err := json.Marshal(entry)
+	if err != nil {
+		fmt.Fprintf(os.Stdout, "[nginx-cache-sync] {\"msg\":\"failed to encode log: %s\"}\n", err.Error())
+		return
+	}
+	fmt.Fprintf(os.Stdout, "[nginx-cache-sync] %s\n", string(jsonBytes))
 }
