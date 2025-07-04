@@ -106,8 +106,8 @@ func logJSON(msg string, fields map[string]string) {
 	}
 	jsonBytes, err := json.Marshal(entry)
 	if err != nil {
-		fmt.Fprintf(os.Stdout, "[nginx-cache-sync] {\"msg\":\"failed to encode log: %s\"}\n", err.Error())
+		fmt.Fprintf(os.Stdout, "\n[nginx-cache-sync] {\"msg\":\"failed to encode log: %s\"}\n", err.Error())
 		return
 	}
-	fmt.Fprintf(os.Stdout, "[nginx-cache-sync] %s\n", string(jsonBytes))
+	fmt.Fprintf(os.Stdout, "\n[nginx-cache-sync] %s\n", string(jsonBytes))
 }
