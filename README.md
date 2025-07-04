@@ -13,7 +13,7 @@ Designed for clustered or containerized environments where **each replica mainta
 - Stores last-seen timestamp in a local file
 ---
 
-## 🧩 WordPress Integration
+## WordPress Integration
 
 Use this together with the companion plugin:
 
