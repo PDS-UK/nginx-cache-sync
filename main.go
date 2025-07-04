@@ -99,7 +99,7 @@ func clearCache(cachePath string) {
 
 func logJSON(msg string, fields map[string]string) {
 	entry := map[string]string{
-		"msg": msg,
+		"msg": "[nginx-cache-sync] " + msg,
 	}
 	for k, v := range fields {
 		entry[k] = v
